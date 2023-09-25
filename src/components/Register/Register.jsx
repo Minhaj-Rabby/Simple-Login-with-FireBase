@@ -2,11 +2,14 @@ import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../Providers/AuthProviders'
 import { sendEmailVerification, updateProfile } from 'firebase/auth';
+import github_logo from '../../assets/image/github.png';
+import google_logo from '../../assets/image/google.png';
+import twitter_logo from '../../assets/image/twitter.png';
 
 const Register = () => {
 
     const [error, setError] = useState('');
-    const { user, emptyUser, createUser, checkPassword } = useContext(AuthContext);
+    const { user, emptyUser, createUser, checkPassword , googlLogIn, githubLogIn, twitterLogIn,} = useContext(AuthContext);
 
 
     const handleRegister = (event) => {
@@ -61,6 +64,43 @@ const Register = () => {
 
     }
 
+    const handleGoogleSignIn=()=>{
+        googlLogIn()
+        .then(result => {
+            const loggedUser = result.user;
+            //setUser(loggedUser);
+            alert('User created Sucessfully');
+            console.log(loggedUser);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+    const handleGithubSignIn=()=>{
+        githubLogIn()
+        .then(result => {
+            const loggedUser = result.user;
+            //setUser(loggedUser);
+            alert('User created Sucessfully');
+            console.log(loggedUser);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+    const handleTwitterSignIn=()=>{
+        twitterLogIn()
+        .then(result => {
+            const loggedUser = result.user;
+            //setUser(loggedUser);
+            alert('User created Sucessfully');
+            console.log(loggedUser);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+
     return (
         <div className="hero min-h-screen bg-base-200">
             <div className="hero-content flex-col">
@@ -90,6 +130,27 @@ const Register = () => {
                         </div>
                         <div className="form-control mt-4">
                             <button className="btn btn-primary">Register</button>
+                        </div>
+                        <div className="flex flex-col w-full mt-2">
+                            <div className="grid rounded-box place-items-center btn btn-outline">
+                                <button onClick={handleGoogleSignIn} className="flex flex-grow place-items-center ">
+                                    <img className="flex mr-4  w-6 " src={google_logo} alt="Google Logo" /> Continue with Google
+                                </button>
+                            </div>
+                            <div className="divider">OR</div>
+                            <div className="flex w-full">
+                                <div className="grid  flex-grow  rounded-box place-items-center  btn btn-outline">
+                                    <button onClick={handleGithubSignIn} className="flex flex-grow place-items-center ">
+                                        <img className="flex mr-2  w-6 " src={github_logo} alt="GitHub Logo" /> <p>GitHub</p>
+                                    </button>
+                                </div>
+                                <div className="divider divider-horizontal">OR</div>
+                                <div className="grid  flex-grow  rounded-box place-items-center  btn btn-outline">
+                                    <button onClick={handleTwitterSignIn} className="flex flex-grow place-items-center ">
+                                        <img className="flex mr-4  w-6 " src={twitter_logo} alt="Twitter Logo" /> Twitter
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <div className=" text-center label-text">
                             <p className='text-error mt-2 mb-2'>{error}</p>
